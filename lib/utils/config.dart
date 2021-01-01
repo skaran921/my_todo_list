@@ -1,4 +1,4 @@
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 
 class Config {
   //****************************************
@@ -17,7 +17,7 @@ class Config {
 
   //Light Theme Config
   static const Color primaryColor = Color(0xFFDDDDDE);
-  static const Color accentColor = Color(0xFFFFFFFF);
+  static Color accentColor = Colors.indigo[300]; //Color(0xFFFFFFFF);
   static const Color scaffoldBackgroundColor = Color(0xFFFAFAFA);
   static const Color appBarColor = Color(0xFFFAFAFA);
 
@@ -26,10 +26,14 @@ class Config {
   static const Color whiteGray = Color(0xFFDDDDDE);
   static const Color black = Color(0xFF020206);
   static const Color grayWhite = Color(0xFFADA4AA);
-  static const Color indigo = Color(0xFF352246);
+  static Color indigo = Colors.indigo[700];
   static const Color orange = Color(0xFFD93923);
   static const Color blueGray = Color(0xFF585967);
   static const Color other = Color(0xFFD39C61);
+
+//card side border decoration
+  static BoxBorder leftSideBorder =
+      Border(left: BorderSide(color: Config.indigo, width: 6.0));
 
   //****************************************
   //?Dark Theme Config

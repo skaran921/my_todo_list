@@ -56,4 +56,16 @@ class CustomDateTime {
 
   String get getMonthString =>
       "${dateTime.month < 10 ? '0' + dateTime.month.toString() : dateTime.month}";
+
+  String get getHourString =>
+      "${dateTime.hour < 10 ? '0' + dateTime.hour.toString() : dateTime.hour}";
+
+  String get getMinuteString =>
+      "${dateTime.minute < 10 ? '0' + dateTime.minute.toString() : dateTime.minute}";
+
+  String get getSecondString =>
+      "${dateTime.second < 10 ? '0' + dateTime.second.toString() : dateTime.second}";
+
+  String get getTimeString =>
+      "${dateTime.hour > 12 ? '0' + (dateTime.hour - 12).toString() : this.getHourString}:${this.getMinuteString}:${this.getSecondString} ${dateTime.hour > 12 ? 'PM' : 'AM'}";
 }

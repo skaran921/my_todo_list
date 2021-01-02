@@ -1,16 +1,43 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:my_todo_list/utils/config.dart';
+import 'package:my_todo_list/utils/customDateTime.dart';
 import 'package:my_todo_list/widgets/CustomIcon.dart';
 import 'package:my_todo_list/widgets/CustomText.dart';
 
-class AddTodo extends StatelessWidget {
+class AddTodo extends StatefulWidget {
+  @override
+  _AddTodoState createState() => _AddTodoState();
+}
+
+class _AddTodoState extends State<AddTodo> {
   final _formKey = GlobalKey<FormState>();
+
+  TextEditingController _todoDateController = TextEditingController();
+
+  TextEditingController _todotitleController = TextEditingController();
+
+  final _priorityValue = ValueNotifier<String>("high");
+
+  final List<Map> _proritiesItems = [
+    {"title": "High", "iconColor": Config.red, "value": "high"},
+    {"title": "Medium", "iconColor": Config.yellow, "value": "medium"},
+    {"title": "Low", "iconColor": Config.green, "value": "low"},
+  ];
+
+  @override
+  void initState() {
+    super.initState();
+    var date = DateTime.now();
+    _todoDateController.text = CustomDateTime(date).getDateString;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
       width: double.infinity,
-      height: Get.height,
+      height: Get.height / 2.5,
       child: Column(
         children: [
           Expanded(
@@ -39,13 +66,14 @@ class AddTodo extends StatelessWidget {
                         ],
                       ),
                       TextField(
+                        controller: _todoDateController,
                         readOnly: true,
                         decoration: InputDecoration(
                           isDense: true,
                           labelText: "Date",
                         ),
                         onTap: () async {
-                          await showDatePicker(
+                          DateTime dateTime = await showDatePicker(
                               context: context,
                               initialDate: DateTime.now(),
                               firstDate: DateTime(2020),
@@ -59,9 +87,13 @@ class AddTodo extends StatelessWidget {
                                     ),
                                     child: child,
                                   ));
+
+                          _todoDateController.text =
+                              CustomDateTime(dateTime).getDateString;
                         },
                       ),
                       TextField(
+                        controller: _todotitleController,
                         decoration:
                             InputDecoration(isDense: true, labelText: "Title"),
                       ),
@@ -73,42 +105,30 @@ class AddTodo extends StatelessWidget {
                         fontColor: Config.grayWhite,
                         fontSize: 12.0,
                       ),
-                      DropdownButton(
-                          isExpanded: true,
-                          itemHeight: 50,
-                          items: [
-                            DropdownMenuItem(
-                                child: Row(
-                              children: [
-                                CustomIcon(
-                                  Icons.circle,
-                                  iconColor: Config.red,
-                                ),
-                                Text("High"),
-                              ],
-                            )),
-                            DropdownMenuItem(
-                                child: Row(
-                              children: [
-                                CustomIcon(
-                                  Icons.circle,
-                                  iconColor: Config.yellow,
-                                ),
-                                Text("Medium"),
-                              ],
-                            )),
-                            DropdownMenuItem(
-                                child: Row(
-                              children: [
-                                CustomIcon(
-                                  Icons.circle,
-                                  iconColor: Config.green,
-                                ),
-                                Text("Low"),
-                              ],
-                            ))
-                          ],
-                          onChanged: (value) {}),
+                      ValueListenableBuilder(
+                          valueListenable: _priorityValue,
+                          builder: (context, value, widget) {
+                            return DropdownButton(
+                                isExpanded: true,
+                                itemHeight: 50,
+                                value: _priorityValue.value,
+                                items: _proritiesItems
+                                    .map((item) => DropdownMenuItem(
+                                        value: item["value"],
+                                        child: Row(
+                                          children: [
+                                            CustomIcon(
+                                              Icons.circle,
+                                              iconColor: item["iconColor"],
+                                            ),
+                                            Text("${item["title"]}"),
+                                          ],
+                                        )))
+                                    .toList(),
+                                onChanged: (value) {
+                                  _priorityValue.value = value;
+                                });
+                          }),
                       SizedBox(
                         height: 6.0,
                       ),

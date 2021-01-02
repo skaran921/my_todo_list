@@ -29,7 +29,9 @@ const List<String> monthNameList = [
 ];
 
 class CustomDateTime {
-  DateTime dateTime = DateTime.now();
+  final DateTime dateTime;
+
+  CustomDateTime(this.dateTime);
 
   DateTime get getCurrentDateTime => dateTime;
 
@@ -57,6 +59,9 @@ class CustomDateTime {
   String get getMonthString =>
       "${dateTime.month < 10 ? '0' + dateTime.month.toString() : dateTime.month}";
 
+  String get getYearString =>
+      "${dateTime.year < 10 ? '0' + dateTime.year.toString() : dateTime.year}";
+
   String get getHourString =>
       "${dateTime.hour < 10 ? '0' + dateTime.hour.toString() : dateTime.hour}";
 
@@ -68,4 +73,7 @@ class CustomDateTime {
 
   String get getTimeString =>
       "${dateTime.hour > 12 ? '0' + (dateTime.hour - 12).toString() : this.getHourString}:${this.getMinuteString}:${this.getSecondString} ${dateTime.hour > 12 ? 'PM' : 'AM'}";
+
+  String get getDateString =>
+      "${this.getDayString}-${this.getMonthString}-${this.getYearString}";
 }

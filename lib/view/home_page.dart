@@ -11,6 +11,7 @@ import 'package:my_todo_list/widgets/CustomText.dart';
 import 'package:my_todo_list/widgets/TodoListTile.dart';
 
 class HomePage extends StatelessWidget {
+  final _dateTime = DateTime.now();
   @override
   Widget build(BuildContext context) {
     return CustomScaffold(
@@ -86,13 +87,13 @@ class HomePage extends StatelessWidget {
                         CustomIcon(Icons.calendar_today_rounded),
                         SizedBox(width: 4.0),
                         CustomText(
-                          "${CustomDateTime().getMonthShortName}",
+                          "${CustomDateTime(_dateTime).getMonthShortName}",
                           fontSize: 18.0,
                           fontColor: Config.grayWhite,
                         ),
                         SizedBox(width: 4.0),
                         CustomText(
-                          "${CustomDateTime().getDay}${CustomDateTime().getDay == 1 ? 'st' : CustomDateTime().getDay == 2 ? 'nd' : CustomDateTime().getDay == 3 ? 'rd' : 'th'}",
+                          "${CustomDateTime(_dateTime).getDay}${CustomDateTime(_dateTime).getDay == 1 ? 'st' : CustomDateTime(_dateTime).getDay == 2 ? 'nd' : CustomDateTime(_dateTime).getDay == 3 ? 'rd' : 'th'}",
                           fontSize: 18.0,
                           fontColor: Config.grayWhite,
                         ),

@@ -1,6 +1,9 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:lottie/lottie.dart';
+import 'package:my_todo_list/controller/TodoController.dart';
+import 'package:my_todo_list/model/Todo.dart';
 import 'package:my_todo_list/utils/config.dart';
 import 'package:my_todo_list/utils/customDateTime.dart';
 import 'package:my_todo_list/widgets/CustomIcon.dart';
@@ -31,6 +34,55 @@ class _AddTodoState extends State<AddTodo> {
     super.initState();
     var date = DateTime.now();
     _todoDateController.text = CustomDateTime(date).getDateString;
+  }
+
+  void validateTodoForm(context) async {
+    FocusScope.of(context).unfocus();
+    if (_formKey.currentState.validate()) {
+      // insert todo in db
+      Todo todo = Todo(
+          date: _todoDateController.text,
+          title: _todotitleController.text,
+          priority: _priorityValue.value);
+      await Get.find<TodoController>().addTodo(todo);
+      Get.dialog(
+          AlertDialog(
+            content: Container(
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Lottie.asset("assets/5449-success-tick.json",
+                      width: 100, height: 100, fit: BoxFit.cover),
+                  SizedBox(
+                    height: 4.0,
+                  ),
+                  CustomText(
+                    "Task Added.",
+                    fontSize: 18,
+                  )
+                ],
+              ),
+            ),
+            actions: [
+              FlatButton.icon(
+                  color: Config.indigo,
+                  onPressed: () {
+                    Get.close(1);
+                  },
+                  icon: CustomIcon(
+                    Icons.close,
+                    iconColor: Config.white,
+                  ),
+                  label: CustomText(
+                    "Close",
+                    fontColor: Config.white,
+                  ))
+            ],
+          ),
+          transitionCurve: Curves.easeInOut,
+          transitionDuration: Duration(milliseconds: 200));
+      _todotitleController.clear();
+    }
   }
 
   @override
@@ -65,13 +117,19 @@ class _AddTodoState extends State<AddTodo> {
                               })
                         ],
                       ),
-                      TextField(
+                      TextFormField(
                         controller: _todoDateController,
                         readOnly: true,
                         decoration: InputDecoration(
                           isDense: true,
                           labelText: "Date",
                         ),
+                        validator: (value) {
+                          if (value.isEmpty) {
+                            return "Date Required.";
+                          }
+                          return null;
+                        },
                         onTap: () async {
                           DateTime dateTime = await showDatePicker(
                               context: context,
@@ -92,8 +150,14 @@ class _AddTodoState extends State<AddTodo> {
                               CustomDateTime(dateTime).getDateString;
                         },
                       ),
-                      TextField(
+                      TextFormField(
                         controller: _todotitleController,
+                        validator: (value) {
+                          if (value.isEmpty) {
+                            return "Title Required.";
+                          }
+                          return null;
+                        },
                         decoration:
                             InputDecoration(isDense: true, labelText: "Title"),
                       ),
@@ -140,7 +204,9 @@ class _AddTodoState extends State<AddTodo> {
                           color: Config.white,
                         )),
                         label: CustomText("Add Task", fontColor: Config.white),
-                        onPressed: () {},
+                        onPressed: () {
+                          validateTodoForm(context);
+                        },
                       )
                     ],
                   )),

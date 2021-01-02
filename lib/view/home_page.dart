@@ -5,18 +5,42 @@ import 'package:my_todo_list/widgets/CustomCircleAvatar.dart';
 import 'package:my_todo_list/widgets/CustomIcon.dart';
 import 'package:my_todo_list/widgets/CustomScaffold.dart';
 import 'package:my_todo_list/widgets/CustomText.dart';
+import 'package:my_todo_list/widgets/TodoListTile.dart';
 
 class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return CustomScaffold(
+      floatingActionButton: FloatingActionButton(
+        backgroundColor: Config.indigo,
+        onPressed: () {},
+        child: Icon(Icons.add),
+      ),
       body: Column(
         children: [
           Container(
-            margin: const EdgeInsets.all(16.0),
-            padding: const EdgeInsets.all(16.0),
+            margin: const EdgeInsets.only(
+                left: 16.0, right: 16.0, top: 16.0, bottom: 0.0),
+            padding: const EdgeInsets.only(
+                left: 16.0, right: 4.0, top: 16.0, bottom: 0.0),
             width: double.infinity,
-            height: 160.0,
+            child: Row(
+              children: [
+                CustomText(
+                  "My Task",
+                  fontSize: 40.0,
+                  fontColor: Config.black,
+                ),
+              ],
+            ),
+          ),
+          Container(
+            margin: const EdgeInsets.only(
+                left: 16.0, right: 16.0, top: 16.0, bottom: 4.0),
+            padding: const EdgeInsets.only(
+                left: 16.0, right: 16.0, top: 16.0, bottom: 2.0),
+            width: double.infinity,
+            height: 150.0,
             decoration: BoxDecoration(
               color: Config.white,
               // borderRadius: BorderRadius.circular(6.0),
@@ -54,87 +78,35 @@ class HomePage extends StatelessWidget {
                         onPressed: () {})
                   ],
                 ),
-                SizedBox(
-                  height: 10.0,
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    CustomIcon(
-                      Icons.access_time,
-                    ),
-                    SizedBox(
-                      width: 10.0,
-                    ),
-                    CustomText(
-                      "${CustomDateTime().getTimeString}",
-                      fontSize: 18.0,
-                      fontColor: Config.grayWhite,
-                    ),
-                  ],
-                ),
-              ],
-            ),
-          ),
-          Container(
-            margin: const EdgeInsets.only(
-              left: 16.0,
-              right: 16.0,
-            ),
-            padding: const EdgeInsets.all(16.0),
-            width: double.infinity,
-            height: 110.0,
-            decoration: BoxDecoration(
-              color: Config.white,
-              border: Config.leftSideBorder,
-            ),
-            child: Stack(
-              children: [
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  crossAxisAlignment: CrossAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     CustomText(
                       "Thursday",
                       fontSize: 20.0,
                       fontColor: Config.grayWhite,
                     ),
-                    CustomText(
-                      "${CustomDateTime().getDayString} ${CustomDateTime().getDay == 1 ? 'st' : CustomDateTime().getDay == 2 ? 'nd' : CustomDateTime().getDay == 3 ? 'rd' : 'th'}",
-                      fontSize: 20.0,
-                      fontColor: Config.grayWhite,
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        CustomIcon(Icons.calendar_today_rounded),
+                        SizedBox(width: 4.0),
+                        CustomText(
+                          "${CustomDateTime().getMonthShortName}",
+                          fontSize: 18.0,
+                          fontColor: Config.grayWhite,
+                        ),
+                        SizedBox(width: 4.0),
+                        CustomText(
+                          "${CustomDateTime().getDay}${CustomDateTime().getDay == 1 ? 'st' : CustomDateTime().getDay == 2 ? 'nd' : CustomDateTime().getDay == 3 ? 'rd' : 'th'}",
+                          fontSize: 18.0,
+                          fontColor: Config.grayWhite,
+                        ),
+                      ],
                     ),
-                    CustomText(
-                      "12 Task",
-                      fontColor: Config.grayWhite,
-                      fontSize: 20.0,
-                    )
                   ],
                 ),
-                SizedBox(height: 10.0),
-                Positioned(
-                  top: 40,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      CustomIcon(Icons.calendar_today_rounded),
-                      SizedBox(width: 4.0),
-                      CustomText(
-                        "${CustomDateTime().getMonthName}",
-                        fontSize: 18.0,
-                        fontColor: Config.grayWhite,
-                      ),
-                    ],
-                  ),
-                ),
-                Positioned(
-                    bottom: 10,
-                    right: 0,
-                    child: FloatingActionButton(
-                      heroTag: "add_todo_btn",
-                      onPressed: () {},
-                      child: Icon(Icons.add),
-                    ))
               ],
             ),
           ),
@@ -144,15 +116,10 @@ class HomePage extends StatelessWidget {
                   physics: BouncingScrollPhysics(),
                   itemCount: 10,
                   itemBuilder: (context, index) {
-                    return CheckboxListTile(
-                        key: ValueKey("todo__row__$index"),
-                        controlAffinity: ListTileControlAffinity.leading,
-                        title: CustomText(
-                          "Todo $index",
-                        ),
-                        secondary: CustomText("Tue"),
-                        value: false,
-                        onChanged: (value) {});
+                    return TodoListTile(
+                      titleText: "Todo $index",
+                      // value: true,
+                    );
                   }),
             ),
           )

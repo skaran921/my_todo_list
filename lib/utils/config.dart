@@ -30,6 +30,7 @@ class Config {
   static const Color orange = Color(0xFFD93923);
   static const Color blueGray = Color(0xFF585967);
   static const Color other = Color(0xFFD39C61);
+  static const Color green = Color(0xFF60C858);
 
 //card side border decoration
   static BoxBorder leftSideBorder =

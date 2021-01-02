@@ -24,6 +24,7 @@ class MyTodoListApp extends StatelessWidget {
             appBarTheme: AppBarTheme(
                 color: Config.appBarColor,
                 elevation: 0.0,
+                centerTitle: true,
                 textTheme: GoogleFonts.poppinsTextTheme(
                   Theme.of(context).textTheme,
                 )),

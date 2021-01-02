@@ -16,7 +16,7 @@ class Config {
   static const String isFirstTimeOpenPrefs = "isFirstTimeOpen";
 
   //Light Theme Config
-  static const Color primaryColor = Color(0xFFDDDDDE);
+  static Color primaryColor = Colors.indigo[700]; //Color(0xFFDDDDDE);
   static Color accentColor = Colors.indigo[300]; //Color(0xFFFFFFFF);
   static const Color scaffoldBackgroundColor = Color(0xFFFAFAFA);
   static const Color appBarColor = Color(0xFFFAFAFA);
@@ -30,7 +30,9 @@ class Config {
   static const Color orange = Color(0xFFD93923);
   static const Color blueGray = Color(0xFF585967);
   static const Color other = Color(0xFFD39C61);
-  static const Color green = Color(0xFF60C858);
+  static const Color green = Color(0xFF2ecc71);
+  static const Color red = Color(0xFFFF4848);
+  static const Color yellow = Color(0xFFFAD02E);
 
 //card side border decoration
   static BoxBorder leftSideBorder =

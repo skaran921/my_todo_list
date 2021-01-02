@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:my_todo_list/utils/config.dart';
 import 'package:my_todo_list/utils/customDateTime.dart';
+import 'package:my_todo_list/widgets/AddTodo.dart';
 import 'package:my_todo_list/widgets/CustomCircleAvatar.dart';
+import 'package:my_todo_list/widgets/CustomHeader.dart';
 import 'package:my_todo_list/widgets/CustomIcon.dart';
 import 'package:my_todo_list/widgets/CustomScaffold.dart';
 import 'package:my_todo_list/widgets/CustomText.dart';
@@ -13,27 +16,17 @@ class HomePage extends StatelessWidget {
     return CustomScaffold(
       floatingActionButton: FloatingActionButton(
         backgroundColor: Config.indigo,
-        onPressed: () {},
+        onPressed: () {
+          Get.bottomSheet(
+            AddTodo(),
+            backgroundColor: Config.white,
+          );
+        },
         child: Icon(Icons.add),
       ),
       body: Column(
         children: [
-          Container(
-            margin: const EdgeInsets.only(
-                left: 16.0, right: 16.0, top: 16.0, bottom: 0.0),
-            padding: const EdgeInsets.only(
-                left: 16.0, right: 4.0, top: 16.0, bottom: 0.0),
-            width: double.infinity,
-            child: Row(
-              children: [
-                CustomText(
-                  "My Task",
-                  fontSize: 40.0,
-                  fontColor: Config.black,
-                ),
-              ],
-            ),
-          ),
+          CustomHeader(),
           Container(
             margin: const EdgeInsets.only(
                 left: 16.0, right: 16.0, top: 16.0, bottom: 4.0),

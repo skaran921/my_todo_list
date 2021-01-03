@@ -5,7 +5,6 @@ import 'package:my_todo_list/controller/TodoController.dart';
 import 'package:my_todo_list/model/Todo.dart';
 import 'package:my_todo_list/utils/config.dart';
 import 'package:my_todo_list/utils/customDateTime.dart';
-import 'package:my_todo_list/widgets/CustomHeader.dart';
 import 'package:my_todo_list/widgets/CustomIcon.dart';
 import 'package:my_todo_list/widgets/CustomScaffold.dart';
 import 'package:my_todo_list/widgets/CustomText.dart';
@@ -68,13 +67,11 @@ class _UpdateTodoState extends State<UpdateTodo> {
             ),
             actions: [
               FlatButton(
-                  color: Config.indigo,
                   onPressed: () {
                     Get.close(1);
                   },
                   child: CustomText(
-                    "Okay",
-                    fontColor: Config.white,
+                    "Close",
                   ))
             ],
           ),
@@ -88,8 +85,30 @@ class _UpdateTodoState extends State<UpdateTodo> {
     return CustomScaffold(
         body: Column(
       children: [
-        CustomHeader(
-          heading: "Update Task",
+        Container(
+          margin: const EdgeInsets.only(
+              left: 16.0, right: 16.0, top: 16.0, bottom: 0.0),
+          padding: const EdgeInsets.only(
+              left: 16.0, right: 4.0, top: 16.0, bottom: 0.0),
+          child: Row(
+            children: [
+              IconButton(
+                icon: CustomIcon(
+                  Icons.arrow_back,
+                  iconColor: Config.black,
+                  iconSize: 30,
+                ),
+                onPressed: () {
+                  Get.close(1);
+                },
+              ),
+              CustomText(
+                "Update Task",
+                fontSize: 40.0,
+                fontColor: Config.black,
+              ),
+            ],
+          ),
         ),
         Expanded(
           child: Padding(

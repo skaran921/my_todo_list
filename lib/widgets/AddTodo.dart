@@ -58,16 +58,11 @@ class _AddTodoState extends State<AddTodo> {
               ),
             ),
             actions: [
-              FlatButton.icon(
-                  color: Config.indigo,
+              FlatButton(
                   onPressed: () {
                     Get.close(1);
                   },
-                  icon: CustomIcon(
-                    Icons.close,
-                    iconColor: Config.white,
-                  ),
-                  label: CustomText(
+                  child: CustomText(
                     "Close",
                     fontColor: Config.white,
                   ))

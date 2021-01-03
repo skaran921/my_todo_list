@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:my_todo_list/controller/TodoController.dart';
 import 'package:my_todo_list/model/Todo.dart';
 import 'package:my_todo_list/utils/config.dart';
 import 'package:my_todo_list/view/update_todo.dart';
+import 'package:my_todo_list/widgets/Alerts.dart';
 import 'package:my_todo_list/widgets/CustomIcon.dart';
 import 'package:my_todo_list/widgets/CustomText.dart';
 
@@ -68,6 +70,10 @@ class TodoListTile extends StatelessWidget {
                   ));
                   break;
                 case "delete":
+                  Alerts.confirmAlertBox(onConfirm: () async {
+                    await Get.find<TodoController>().deleteTodo(todo.id, index);
+                    Get.close(1);
+                  });
                   break;
                 default:
                   return;

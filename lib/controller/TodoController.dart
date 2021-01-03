@@ -46,7 +46,9 @@ class TodoController extends GetxController {
   }
 
   //delete todo
-  deleteTodo(int index) {
+  deleteTodo(int id, int index) async {
+    var dbHelper = DBHelper();
+    await dbHelper.deleteTodo(id);
     todos.removeAt(index);
   }
 

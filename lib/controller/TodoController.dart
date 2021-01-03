@@ -24,14 +24,24 @@ class TodoController extends GetxController {
     isAddTodoLoading.value = true;
     var dbHelper = DBHelper();
     int lastInsertId = await dbHelper.insertTodo(todo);
+    // print("=========[lastInsertId]=====$lastInsertId");
     // todo.id = lastInsertId;
-    todos.add(todo);
+    var insertedTodo = Todo(
+        id: lastInsertId,
+        title: todo.title,
+        date: todo.date,
+        priority: todo.priority,
+        isDone: todo.isDone);
+    todos.insert(0, insertedTodo);
     isAddTodoLoading.value = false;
     return lastInsertId;
   }
 
   // update todo
-  updateTodo(Todo todo, int index) {
+  updateTodo(Todo todo, int index) async {
+    print("===todo.isDone = ${todo.isDone}");
+    var dbHelper = DBHelper();
+    await dbHelper.updateTodo(todo);
     todos[index] = todo;
   }
 

@@ -126,7 +126,22 @@ class HomePage extends StatelessWidget {
                               itemCount: todoController.todos.length,
                               itemBuilder: (context, index) {
                                 return TodoListTile(
-                                  titleText: "Todo $index",
+                                  titleText:
+                                      "${todoController.todos[index].title}",
+                                  date: "${todoController.todos[index].date}",
+                                  priority:
+                                      "${todoController.todos[index].priority}",
+                                  isDone: todoController.todos[index].isDone ==
+                                      "true",
+                                  value: todoController.todos[index].isDone ==
+                                      "true",
+                                  onChanged: (value) async {
+                                    print(value);
+                                    var todo = todoController.todos[index];
+                                    todo.setIsDone = (value).toString();
+                                    await todoController.updateTodo(
+                                        todoController.todos[index], index);
+                                  },
                                   // value: true,
                                 );
                               });

@@ -1,15 +1,18 @@
 class Todo {
-  final int id;
-  final String date;
-  final String title;
-  final String priority;
-  final String isDone;
-  const Todo(
-      {this.id, this.date, this.title, this.priority, this.isDone = "false"});
+  int id;
+  String date;
+  String title;
+  String priority;
+  String isDone;
+  Todo({this.id, this.date, this.title, this.priority, this.isDone = "false"});
 
-  // set id(int id) {
-  //   this.id = 0;
-  // }
+  set setId(int id) {
+    this.id = 0;
+  }
+
+  set setIsDone(String value) {
+    this.isDone = value;
+  }
 
   factory Todo.fromJson(Map<String, dynamic> todo) {
     return Todo(
@@ -23,7 +26,17 @@ class Todo {
 
   Map<String, dynamic> toJson() {
     return {
-      "TODO_DATE": this.id,
+      "TODO_DATE": this.date,
+      "TODO_TITLE": this.title,
+      "TODO_PRIORITY": this.priority,
+      "IS_DONE": this.isDone,
+    };
+  }
+
+  Map<String, dynamic> toMap() {
+    return {
+      "TODO_ID": this.id,
+      "TODO_DATE": this.date,
       "TODO_TITLE": this.title,
       "TODO_PRIORITY": this.priority,
       "IS_DONE": this.isDone,

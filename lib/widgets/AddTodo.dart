@@ -23,12 +23,6 @@ class _AddTodoState extends State<AddTodo> {
 
   final _priorityValue = ValueNotifier<String>("high");
 
-  final List<Map> _proritiesItems = [
-    {"title": "High", "iconColor": Config.red, "value": "high"},
-    {"title": "Medium", "iconColor": Config.yellow, "value": "medium"},
-    {"title": "Low", "iconColor": Config.green, "value": "low"},
-  ];
-
   @override
   void initState() {
     super.initState();
@@ -41,7 +35,7 @@ class _AddTodoState extends State<AddTodo> {
     if (_formKey.currentState.validate()) {
       // insert todo in db
       Todo todo = Todo(
-          date: _todoDateController.text,
+          date: _todoDateController.text ?? CustomDateTime(DateTime.now()),
           title: _todotitleController.text,
           priority: _priorityValue.value);
       await Get.find<TodoController>().addTodo(todo);
@@ -89,7 +83,7 @@ class _AddTodoState extends State<AddTodo> {
   Widget build(BuildContext context) {
     return Container(
       width: double.infinity,
-      height: Get.height / 2.5,
+      height: Get.height / 1.5,
       child: Column(
         children: [
           Expanded(
@@ -176,7 +170,7 @@ class _AddTodoState extends State<AddTodo> {
                                 isExpanded: true,
                                 itemHeight: 50,
                                 value: _priorityValue.value,
-                                items: _proritiesItems
+                                items: Config.prioritiesItems
                                     .map((item) => DropdownMenuItem(
                                         value: item["value"],
                                         child: Row(

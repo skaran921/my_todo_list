@@ -57,4 +57,11 @@ class Config {
 
   // Text Config
   static const String appName = "My Todo List";
+
+// _proritiesItems
+  static final List<Map> prioritiesItems = [
+    {"title": "High", "iconColor": Config.red, "value": "high"},
+    {"title": "Medium", "iconColor": Config.yellow, "value": "medium"},
+    {"title": "Low", "iconColor": Config.green, "value": "low"},
+  ];
 }

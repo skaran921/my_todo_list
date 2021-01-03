@@ -42,13 +42,16 @@ class DBHelper {
 //getAllTodos from db
   Future<List<Todo>> getAllToods() async {
     Database myDB = await db;
-    List<Map> todos = await myDB.rawQuery("SELECT * FROM TODO");
+    List<Map> todos =
+        await myDB.rawQuery("SELECT * FROM TODO ORDER BY TODO_ID DESC");
+    // print("==========DB todos $todos");
     List<Todo> todoList = [];
 
-    todos.map((todo) {
+    todos.forEach((todo) {
       var todoItem = Todo.fromJson(todo);
       todoList.add(todoItem);
     });
+    // print("==========DB todoList $todoList");
 
     return todoList;
   }
@@ -56,5 +59,12 @@ class DBHelper {
   Future<int> insertTodo(Todo todo) async {
     Database myDB = await db;
     return await myDB.insert("TODO", todo.toJson());
+  }
+
+  // update todo
+  Future<int> updateTodo(Todo todo) async {
+    Database myDB = await db;
+    return await myDB.update("TODO", todo.toMap(),
+        where: 'TODO_ID = ?', whereArgs: [todo.id]);
   }
 }

@@ -4,7 +4,7 @@ import 'package:my_todo_list/controller/TodoController.dart';
 import 'package:my_todo_list/utils/config.dart';
 import 'package:my_todo_list/utils/customDateTime.dart';
 import 'package:my_todo_list/widgets/AddTodo.dart';
-import 'package:my_todo_list/widgets/CustomCircleAvatar.dart';
+// import 'package:my_todo_list/widgets/CustomCircleAvatar.dart';
 import 'package:my_todo_list/widgets/CustomHeader.dart';
 import 'package:my_todo_list/widgets/CustomIcon.dart';
 import 'package:my_todo_list/widgets/CustomScaffold.dart';
@@ -14,8 +14,10 @@ import 'package:my_todo_list/widgets/TodoListTile.dart';
 class HomePage extends StatelessWidget {
   final _dateTime = DateTime.now();
   final _todoController = Get.put<TodoController>(TodoController());
+
   @override
   Widget build(BuildContext context) {
+    var dayWish = CustomDateTime(_dateTime).getDayWish();
     return CustomScaffold(
       floatingActionButton: FloatingActionButton(
         backgroundColor: Config.indigo,
@@ -36,7 +38,8 @@ class HomePage extends StatelessWidget {
             padding: const EdgeInsets.only(
                 left: 16.0, right: 16.0, top: 16.0, bottom: 2.0),
             width: double.infinity,
-            height: 150.0,
+            // height: 150.0,
+            height: 85.0,
             decoration: BoxDecoration(
               color: Config.white,
               // borderRadius: BorderRadius.circular(6.0),
@@ -49,37 +52,41 @@ class HomePage extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     CustomText(
-                      "Good Morning",
+                      dayWish ?? '',
                       fontSize: 20.0,
                       fontColor: Config.grayWhite,
                     ),
-                    CustomCircleAvatar(
-                      text: "K",
-                    )
+
+                    //TODO: come here to fix circle avatar text
+                    // CustomCircleAvatar(
+                    //   text: "K",
+                    // )
                   ],
                 ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    CustomText(
-                      "Karan Soni",
-                      fontSize: 18.0,
-                      fontColor: Config.grayWhite,
-                    ),
-                    IconButton(
-                        icon: Icon(
-                          Icons.settings,
-                          color: Config.grayWhite,
-                        ),
-                        onPressed: () {})
-                  ],
-                ),
+                //TODO: come here to fix this below row value
+
+                // Row(
+                //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                //   children: [
+                //     CustomText(
+                //       "Karan Soni",
+                //       fontSize: 18.0,
+                //       fontColor: Config.grayWhite,
+                //     ),
+                //     IconButton(
+                //         icon: Icon(
+                //           Icons.settings,
+                //           color: Config.grayWhite,
+                //         ),
+                //         onPressed: () {})
+                //   ],
+                // ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     CustomText(
-                      "Thursday",
+                      "${CustomDateTime(_dateTime).dayName}",
                       fontSize: 20.0,
                       fontColor: Config.grayWhite,
                     ),
@@ -109,6 +116,7 @@ class HomePage extends StatelessWidget {
           Expanded(
             child: Scrollbar(
               child: GetX<TodoController>(
+                init: _todoController,
                 builder: (todoController) {
                   return todoController.isTodoLoading.value
                       ? Center(
@@ -126,11 +134,8 @@ class HomePage extends StatelessWidget {
                               itemCount: todoController.todos.length,
                               itemBuilder: (context, index) {
                                 return TodoListTile(
-                                  titleText:
-                                      "${todoController.todos[index].title}",
-                                  date: "${todoController.todos[index].date}",
-                                  priority:
-                                      "${todoController.todos[index].priority}",
+                                  index: index,
+                                  todo: todoController.todos[index],
                                   isDone: todoController.todos[index].isDone ==
                                       "true",
                                   value: todoController.todos[index].isDone ==

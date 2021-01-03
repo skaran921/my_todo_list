@@ -28,6 +28,16 @@ const List<String> monthNameList = [
   "December",
 ];
 
+const List<String> dayNames = [
+  "Monday",
+  "Tuesday",
+  "Wednesday",
+  "Thursday",
+  "Friday",
+  "Saturday",
+  "Sunday",
+];
+
 class CustomDateTime {
   final DateTime dateTime;
 
@@ -76,4 +86,19 @@ class CustomDateTime {
 
   String get getDateString =>
       "${this.getDayString}-${this.getMonthString}-${this.getYearString}";
+
+  int get getWeekDay => dateTime.weekday;
+  String get dayName => dayNames[dateTime.weekday - 1];
+
+  String getDayWish() {
+    if (dateTime.hour > 3 && dateTime.hour < 12) {
+      return "Good Morning";
+    } else if (dateTime.hour >= 12 && dateTime.hour < 5) {
+      return "Good Afternoon";
+    } else if (dateTime.hour >= 5 && dateTime.hour >= 8) {
+      return "Good Evening";
+    } else {
+      return "Good Night";
+    }
+  }
 }

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:my_todo_list/controller/TodoController.dart';
 import 'package:my_todo_list/utils/config.dart';
 import 'package:my_todo_list/utils/customDateTime.dart';
 import 'package:my_todo_list/widgets/AddTodo.dart';
@@ -12,6 +13,7 @@ import 'package:my_todo_list/widgets/TodoListTile.dart';
 
 class HomePage extends StatelessWidget {
   final _dateTime = DateTime.now();
+  final _todoController = Get.put<TodoController>(TodoController());
   @override
   Widget build(BuildContext context) {
     return CustomScaffold(
@@ -106,15 +108,45 @@ class HomePage extends StatelessWidget {
           ),
           Expanded(
             child: Scrollbar(
-              child: ListView.builder(
-                  physics: BouncingScrollPhysics(),
-                  itemCount: 10,
-                  itemBuilder: (context, index) {
-                    return TodoListTile(
-                      titleText: "Todo $index",
-                      // value: true,
-                    );
-                  }),
+              child: GetX<TodoController>(
+                builder: (todoController) {
+                  return todoController.isTodoLoading.value
+                      ? Center(
+                          child: CircularProgressIndicator(),
+                        )
+                      : todoController.todos.length.isEqual(0)
+                          ? Center(
+                              child: CustomText(
+                                "No Task Found",
+                                fontSize: 20,
+                              ),
+                            )
+                          : ListView.builder(
+                              physics: BouncingScrollPhysics(),
+                              itemCount: todoController.todos.length,
+                              itemBuilder: (context, index) {
+                                return TodoListTile(
+                                  titleText:
+                                      "${todoController.todos[index].title}",
+                                  date: "${todoController.todos[index].date}",
+                                  priority:
+                                      "${todoController.todos[index].priority}",
+                                  isDone: todoController.todos[index].isDone ==
+                                      "true",
+                                  value: todoController.todos[index].isDone ==
+                                      "true",
+                                  onChanged: (value) async {
+                                    print(value);
+                                    var todo = todoController.todos[index];
+                                    todo.setIsDone = (value).toString();
+                                    await todoController.updateTodo(
+                                        todoController.todos[index], index);
+                                  },
+                                  // value: true,
+                                );
+                              });
+                },
+              ),
             ),
           )
         ],

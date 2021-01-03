@@ -109,6 +109,7 @@ class HomePage extends StatelessWidget {
           Expanded(
             child: Scrollbar(
               child: GetX<TodoController>(
+                init: _todoController,
                 builder: (todoController) {
                   return todoController.isTodoLoading.value
                       ? Center(
@@ -126,11 +127,8 @@ class HomePage extends StatelessWidget {
                               itemCount: todoController.todos.length,
                               itemBuilder: (context, index) {
                                 return TodoListTile(
-                                  titleText:
-                                      "${todoController.todos[index].title}",
-                                  date: "${todoController.todos[index].date}",
-                                  priority:
-                                      "${todoController.todos[index].priority}",
+                                  index: index,
+                                  todo: todoController.todos[index],
                                   isDone: todoController.todos[index].isDone ==
                                       "true",
                                   value: todoController.todos[index].isDone ==

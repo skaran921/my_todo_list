@@ -64,7 +64,6 @@ class _AddTodoState extends State<AddTodo> {
                   },
                   child: CustomText(
                     "Close",
-                    fontColor: Config.white,
                   ))
             ],
           ),

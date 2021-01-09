@@ -95,7 +95,7 @@ class CustomDateTime {
       return "Good Morning";
     } else if (dateTime.hour >= 12 && dateTime.hour < 5) {
       return "Good Afternoon";
-    } else if (dateTime.hour >= 5 && dateTime.hour >= 8) {
+    } else if (dateTime.hour >= 5 && dateTime.hour < 8) {
       return "Good Evening";
     } else {
       return "Good Night";
